@@ -37,7 +37,7 @@ serializeCardData = async (pages) => {
 
     // split by td tag element into array
     const splitdata = element.split('</td>')
-    // array effect card 
+    // array effect card
     const splitEffectCardDiv = splitdata[2].split('</div>')
     // array slot and type card
     const splitSlotCardDiv = splitdata[3].split('</div>')
@@ -45,8 +45,8 @@ serializeCardData = async (pages) => {
     let cardEffect = ''
 
     const permaBuff = splitEffectCardDiv[3].match(/<div>(.*)/)[1]
-    const cardSlot = (splitSlotCardDiv[1].match(/<div>(.*)/)[1] === '?') ? 'unknown' : splitSlotCardDiv[1].match(/<div>(.*)/)[1]
-    const cardType = (splitSlotCardDiv[3].match(/<div>(.*)/)[1] === '?') ? 'unknown' : splitSlotCardDiv[3].match(/<div>(.*)/)[1]
+    const cardSlot = (splitSlotCardDiv[1].match(/<div>(.*)/)[1] === '?') ? null : splitSlotCardDiv[1].match(/<div>(.*)/)[1]
+    const cardType = (splitSlotCardDiv[3].match(/<div>(.*)/)[1] === '?') ? null : splitSlotCardDiv[3].match(/<div>(.*)/)[1]
 
     // if effect card has multiple lines
     if (splitEffectCardDiv[1].match(/<br ?\/?>/)) {
@@ -97,7 +97,7 @@ serializeCardFullData = async (url) => {
   const cardSellable = commonMatch[3].match(/<td class="text-right">(.*)<\/td>/)[1]
   const cardSellPrice = commonMatch[4].match(/<td class="text-right">(.*)<\/td>/)[1]
   const cardAuctionable = commonMatch[5].match(/<td class="text-right">(.*)<\/td>/)[1]
-  const cardStorageable = (commonMatch[6] && commonMatch[6].match(/<td class="text-right">(.*)<\/td>/) ? commonMatch[6].match(/<td class="text-right">(.*)<\/td>/)[1] : 'unknown')
+  const cardStorageable = (commonMatch[6] && commonMatch[6].match(/<td class="text-right">(.*)<\/td>/) ? commonMatch[6].match(/<td class="text-right">(.*)<\/td>/)[1] : null)
 
   const metadata = {
     'common_data': {
@@ -109,9 +109,9 @@ serializeCardFullData = async (url) => {
       'storageable': cardStorageable
     },
     'drop_data': {
-      'dropped_by': 'no drop',
-      'monster_level': 'unknown',
-      'drop_rate': 'unknown'
+      'dropped_by': null,
+      'monster_level': null,
+      'drop_rate': null
     }
   }
 
@@ -121,13 +121,13 @@ serializeCardFullData = async (url) => {
     const dropElement = (dropDom[0]) ? dropDom[0].split('</div>').slice(1) : []
 
     // drop data
-    const cardDroppedBy = (dropElement[0] && dropElement[0].match(/<a .*>(.*)<\/a>/) ? dropElement[0].match(/<a .*>(.*)<\/a>/)[1] : 'unknown')
-    const cardMonsterLevel = (dropElement[1] && dropElement[1].match(/.*>(.*)/) ? dropElement[1].match(/.*>(.*)/)[1] : 'unknown')
-    const cardDropRate = (dropElement[2] && dropElement[2].match(/.*>(.*)/) ? dropElement[2].match(/.*>(.*)/)[1] : 'unknown')
+    const cardDroppedBy = (dropElement[0] && dropElement[0].match(/<a .*>(.*)<\/a>/) ? dropElement[0].match(/<a .*>(.*)<\/a>/)[1] : null)
+    const cardMonsterLevel = (dropElement[1] && dropElement[1].match(/.*>(.*)/) ? dropElement[1].match(/.*>(.*)/)[1] : null)
+    const cardDropRate = (dropElement[2] && dropElement[2].match(/.*>(.*)/) ? dropElement[2].match(/.*>(.*)/)[1] : null)
 
     metadata.drop_data.dropped_by = cardDroppedBy
     metadata.drop_data.monster_level = cardMonsterLevel
-    metadata.drop_data.drop_rate = cardDropRate === '?%' ? 'unknow' : cardDropRate
+    metadata.drop_data.drop_rate = cardDropRate === '?%' ? null : cardDropRate
   }
 
   return metadata

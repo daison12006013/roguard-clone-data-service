@@ -38,7 +38,7 @@ serializeEquipmentData = async (pages) => {
     const splitdata = element.split('</td>')
     const splitEquipmentStatusDiv = splitdata[3]
 
-    equipmentStatus = ''
+    equipmentStatus = []
 
     // if effect card has multiple lines
     if (splitEquipmentStatusDiv.match(/<br ?\/?>/)) {
@@ -46,17 +46,17 @@ serializeEquipmentData = async (pages) => {
 
       effectCard.forEach((element, index) => {
         if (index === 0) {
-          equipmentStatus = element.match(/<td (.*)>\s*(.*)/)[2]
+          equipmentStatus.push(element.match(/<td (.*)>\s*(.*)/)[2]);
         } else {
-          equipmentStatus = equipmentStatus + ', ' + element.match(/\r\n|\r|\n(.*)/)[1]
+          equipmentStatus.push(element.match(/\r\n|\r|\n(.*)/)[1]);
         }
       })
 
       // if effect card has single lines
     } else {
-      equipmentStatus = (splitdata[2].match(/<td (.*)>\s*(.*)/)[2] !== '') ? splitdata[2].match(/<td (.*)>\s*(.*)/)[2] : 'unknown'
-      if (equipmentStatus === 'unknown') {
-        equipmentStatus = (element.split('</td>')[3].match(/<td (.*)>\s*(.*)/)[2] !== null) ? element.split('</td>')[3].match(/<td (.*)>\s*(.*)/)[2] : 'unknown'
+      equipmentStatus.push((splitdata[2].match(/<td (.*)>\s*(.*)/)[2] !== '') ? splitdata[2].match(/<td (.*)>\s*(.*)/)[2] : null)
+      if (equipmentStatus === null) {
+        equipmentStatus.push((element.split('</td>')[3].match(/<td (.*)>\s*(.*)/)[2] !== null) ? element.split('</td>')[3].match(/<td (.*)>\s*(.*)/)[2] : null)
       }
     }
 

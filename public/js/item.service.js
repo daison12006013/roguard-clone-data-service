@@ -38,26 +38,27 @@ serializeItemData = async (pages) => {
     const splitdata = element.split('</td>')
     const splitItemDescriptionDiv = splitdata[3]
 
-    itemDescription = ''
-    itemEffect = ''
+    itemDescription = '';
+    itemEffect = [];
 
     // if item description has multiple lines
     if (splitItemDescriptionDiv.match(/<br ?\/?>/)) {
       const itemEffects = splitItemDescriptionDiv
 
       if (itemEffects.match(/<div style="margin-top: 10px;">(.*)<br>/)) {
-        itemEffect = itemEffects.match(/<div style="margin-top: 10px;">(.*)<br>/)[1]
+        itemEffect.push(itemEffects.match(/<div style="margin-top: 10px;">(.*)<br>/)[1]);
       }
 
       if (itemEffects.match(/<br>\n(.*)<\/div>/)) {
-        itemEffect = `${itemEffect},` + itemEffects.match(/<br>\n(.*)<\/div>/)[1]
+        itemEffect.push(itemEffects.match(/<br>\n(.*)<\/div>/)[1]);
       }
     }
 
     // if effect card has single lines
-    itemDescription = (splitdata[2].match(/<td (.*)>\s*(.*)/)[2] !== '') ? splitdata[2].match(/<td (.*)>\s*(.*)/)[2] : 'unknown'
-    if (itemDescription === 'unknown') {
-      itemDescription = (element.split('</td>')[3].match(/<td (.*)>\s*(.*)/)[2] !== null) ? element.split('</td>')[3].match(/<td (.*)>\s*(.*)/)[2] : 'unknown'
+    itemDescription = (splitdata[2].match(/<td (.*)>\s*(.*)/)[2] !== '') ? splitdata[2].match(/<td (.*)>\s*(.*)/)[2] : null
+
+    if (itemDescription === null) {
+      itemDescription = (element.split('</td>')[3].match(/<td (.*)>\s*(.*)/)[2] !== null) ? element.split('</td>')[3].match(/<td (.*)>\s*(.*)/)[2] : null
     }
 
     itemDescription = itemDescription.replace('<div>', '')
