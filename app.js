@@ -1,7 +1,7 @@
 const monsterService = require('./public/js/monster-service')
 const cardService = require('./public/js/card-service')
 const equipmentService = require('./public/js/equipment-service')
-const itemService = require('./public/js/item.service')
+const itemService = require('./public/js/item-service')
 
 ROGUARD_MONSTER_PAGES = 12
 ROGUARD_CARD_PAGES = 15
