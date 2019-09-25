@@ -5,7 +5,11 @@ const { JSDOM } = jsdom;
 const { normalizeText } = helpers;
 const dir = './database/card';
 
-cloneCardData = async pages => {
+cloneCardData = async (pages, _dir = null) => {
+  if (_dir) {
+    dir = _dir;
+  }
+
   // Check and create dir when dir not exist
   await fs.ensureDir(dir);
 
