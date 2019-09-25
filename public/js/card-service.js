@@ -3,11 +3,11 @@ const jsdom = require('jsdom');
 const helpers = require('./helpers');
 const { JSDOM } = jsdom;
 const { normalizeText } = helpers;
-const dir = './database/card';
+let dir = './database/card';
 
-cloneCardData = async (pages, _dir = null) => {
-  if (_dir) {
-    dir = _dir;
+cloneCardData = async (pages, customDir = null) => {
+  if (customDir) {
+    dir = customDir;
   }
 
   // Check and create dir when dir not exist
@@ -183,7 +183,7 @@ serializeCardFullData = async url => {
 };
 
 module.exports = {
-  clone(pages) {
-    cloneCardData(pages);
+  clone(pages, customDir = null) {
+    cloneCardData(pages, customDir);
   },
 };

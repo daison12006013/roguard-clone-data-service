@@ -3,11 +3,11 @@ const jsdom = require('jsdom');
 const helpers = require('./helpers');
 const { JSDOM } = jsdom;
 const { normalizeText } = helpers;
-const dir = './database/monster';
+let dir = './database/monster';
 
-cloneMonsterData = async (pages, _dir = null) => {
-  if (_dir) {
-    dir = _dir;
+cloneMonsterData = async (pages, customDir = null) => {
+  if (customDir) {
+    dir = customDir;
   }
 
   // Check and create dir when dir not exist
@@ -318,7 +318,7 @@ serializeMonsterFullData = async url => {
 };
 
 module.exports = {
-  async clone(pages) {
-    await cloneMonsterData(pages);
+  async clone(pages, customDir = null) {
+    await cloneMonsterData(pages, customDir);
   },
 };
