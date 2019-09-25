@@ -5,7 +5,7 @@ const { JSDOM } = jsdom;
 const { normalizeText } = helpers;
 let dir = './database/monster';
 
-cloneMonsterData = async (pages, customDir = null) => {
+cloneMonsterData = async (pages, customDir) => {
   if (customDir) {
     dir = customDir;
   }
@@ -30,7 +30,7 @@ cloneMonsterData = async (pages, customDir = null) => {
     } else {
       const resp = await serializeMonsterData(`?page=${i}`);
       fs.writeFile(
-        `./database/monster/data${i}.json`,
+        `${dir}/data${i}.json`,
         JSON.stringify(resp, null, 4),
         err => {
           if (err) {
@@ -318,7 +318,7 @@ serializeMonsterFullData = async url => {
 };
 
 module.exports = {
-  async clone(pages, customDir = null) {
-    await cloneMonsterData(pages, customDir);
+  clone(pages, customDir = null) {
+    cloneMonsterData(pages, customDir);
   },
 };

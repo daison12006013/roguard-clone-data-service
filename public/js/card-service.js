@@ -5,7 +5,7 @@ const { JSDOM } = jsdom;
 const { normalizeText } = helpers;
 let dir = './database/card';
 
-cloneCardData = async (pages, customDir = null) => {
+cloneCardData = async (pages, customDir) => {
   if (customDir) {
     dir = customDir;
   }

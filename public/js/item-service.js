@@ -5,7 +5,7 @@ const { JSDOM } = jsdom;
 const { normalizeText } = helpers;
 let dir = './database/item';
 
-cloneItemData = async (pages, customDir = null) => {
+cloneItemData = async (pages, customDir) => {
   if (customDir) {
     dir = customDir;
   }
@@ -105,7 +105,7 @@ serializeItemData = async pages => {
 };
 
 module.exports = {
-  async clone(pages, customDir = null) {
-    await cloneItemData(pages, customDir);
+  clone(pages, customDir = null) {
+    cloneItemData(pages, customDir);
   },
 };
